@@ -12,12 +12,10 @@ const Dashboard = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [alert, setAlert] = useState(null);
 
-    // Fetch notes on mount
     useEffect(() => {
         fetchNotes();
     }, []);
 
-    // Clear alert after 3 seconds
     useEffect(() => {
         if (alert) {
             const timer = setTimeout(() => setAlert(null), 3000);
@@ -92,14 +90,13 @@ const Dashboard = () => {
                 <div className="container flex justify-between items-center">
                     <h1 style={{ margin: 0, fontSize: '1.5rem', background: 'linear-gradient(45deg, var(--color-primary), #a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>UserNotes</h1>
                     <div className="flex items-center gap-4">
-                        <span className="text-muted hide-mobile">Welcome, {user?.email.split('@')[0]}</span>
+                        <span className="text-muted hide-mobile">Welcome, <strong>{user?.username}</strong> ({user?.email})</span>
                         <button onClick={logout} className="btn btn-ghost" style={{ padding: '0.5rem 1rem' }}>Logout</button>
                     </div>
                 </div>
             </header>
 
             <div className="container">
-                {/* Alert Notification */}
                 {alert && (
                     <div className={`card`} style={{
                         position: 'fixed', bottom: '2rem', right: '2rem', zIndex: 1000,
@@ -110,7 +107,6 @@ const Dashboard = () => {
                     </div>
                 )}
 
-                {/* Create/Edit Note Form */}
                 <div className="card mb-4" style={{ marginBottom: '3rem', border: editingNote ? '1px solid var(--color-primary)' : '1px solid var(--color-border)' }}>
                     <div className="flex justify-between items-center mb-4">
                         <h3 style={{ margin: 0 }}>{editingNote ? 'Edit Note' : 'Create New Note'}</h3>
@@ -138,7 +134,6 @@ const Dashboard = () => {
                     </form>
                 </div>
 
-                {/* Search Bar */}
                 <div className="mb-4" style={{ marginBottom: '2rem' }}>
                     <input
                         type="text"
@@ -150,7 +145,6 @@ const Dashboard = () => {
                     />
                 </div>
 
-                {/* Notes List */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
                     {filteredNotes.length === 0 ? (
                         <div className="text-center" style={{ gridColumn: '1 / -1', padding: '3rem' }}>

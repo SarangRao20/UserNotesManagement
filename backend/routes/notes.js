@@ -4,7 +4,6 @@ import protect from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-/* Get user's notes */
 router.get("/", protect, async (req, res) => {
     try {
         const notes = await Note.find({ user: req.user }).sort({ createdAt: -1 }); // Newest first
@@ -15,7 +14,6 @@ router.get("/", protect, async (req, res) => {
     }
 });
 
-/* Create note */
 router.post("/", protect, async (req, res) => {
     try {
         const { title, description } = req.body;
@@ -37,7 +35,6 @@ router.post("/", protect, async (req, res) => {
     }
 });
 
-/* Delete note */
 router.delete("/:id", protect, async (req, res) => {
     try {
         const note = await Note.findOneAndDelete({ _id: req.params.id, user: req.user });
@@ -53,7 +50,6 @@ router.delete("/:id", protect, async (req, res) => {
     }
 });
 
-/* Update note */
 router.put("/:id", protect, async (req, res) => {
     try {
         const { title, description } = req.body;

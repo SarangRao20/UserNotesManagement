@@ -11,11 +11,18 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(formData.email)) {
+            setError('Please enter a valid email address.');
+            return;
+        }
+
         try {
             await login(formData.email, formData.password);
             navigate('/dashboard');
         } catch (err) {
-            setError('Invalid credentials or server error');
+            setError(err.response?.data?.message || 'Invalid credentials or server error');
         }
     };
 

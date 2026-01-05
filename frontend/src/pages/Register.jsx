@@ -11,11 +11,23 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(formData.email)) {
+            setError('Please enter a valid email address.');
+            return;
+        }
+
+        if (formData.password.length < 6) {
+            setError('Password must be at least 6 characters long.');
+            return;
+        }
+
         try {
             await register(formData.email, formData.password);
             navigate('/login');
         } catch (err) {
-            setError('Registration failed. Try again.');
+            setError(err.response?.data?.message || 'Registration failed. Try again.');
         }
     };
 
